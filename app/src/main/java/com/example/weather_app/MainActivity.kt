@@ -50,6 +50,22 @@ fun weather_screen(){
             .padding(16.dp)
     ) {
         Text(
+            text = "City: Barcelona",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
+            text = "",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
             text = "Today's weather",
                     style = TextStyle(
                         color = Color.White,
@@ -73,5 +89,17 @@ fun weather_screen(){
                 fontWeight = FontWeight.Bold
             )
         )
+        Text(
+            text = "Wind speed: 21 km/h",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
+}
+
+fun data_viewer(){
+
 }

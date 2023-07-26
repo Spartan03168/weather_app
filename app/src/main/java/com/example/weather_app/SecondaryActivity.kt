@@ -32,10 +32,14 @@ import androidx.wear.tiles.material.Text
 import com.example.weather_app.ui.theme.Weather_appTheme
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import java.time.LocalDate
+import kotlin.random.Random
 
 class SecondaryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,15 +85,20 @@ fun DefaultPreview() {
 @Composable
 fun weather_screen() {
     // Sample forecast data for demonstration purposes
+    var devMode = 1
     val currentDate = LocalDate.now()
     val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy")
-    val sampleForecastData = listOf(
-        ForecastItem("2023-06-25", 30),
-        ForecastItem("2023-06-26", 29),
-        ForecastItem("2023-06-27", 28),
-        // Add more forecast items as needed
-    )
+    val ForecastData = mutableListOf<LocalDate>()
+    val TemperatureData = mutableListOf<Int>()
+    val context = LocalContext.current
+    //Button(onClick = {
+    //    val intent = Intent(context, MainActivity::class.java)
+    //    context.startActivity(intent)
+    //}) {
+    //    Text(text = "Return")
+    //}
 
+    Spacer(modifier = Modifier.height(12.dp))
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -114,16 +123,18 @@ fun weather_screen() {
                 fontWeight = FontWeight.Bold
             )
         )
+        Divider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "",
+            text = "Today's weather",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         )
+        Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Today's weather",
+            text = "Conditions: Sunny",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -154,7 +165,23 @@ fun weather_screen() {
                 fontWeight = FontWeight.Bold
             )
         )
-
+        Text(
+            text = "Wind direction: SW",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
+            text = "Rainfall proability: 41%",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))
 
         val context = LocalContext.current

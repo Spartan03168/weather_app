@@ -51,8 +51,6 @@ class SecondaryActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.Black
                 ) {
-                    Text(text = "Secondary screen insert port")
-
                     val sampleForecastData = listOf(
                         ForecastItem("2023-06-25", 30),
                         ForecastItem("2023-06-26", 29),
@@ -182,6 +180,23 @@ fun weather_screen() {
             )
         )
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = "Sunrise: 06:38",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
+            text = "Sunset: 21:16",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))
 
         val context = LocalContext.current
@@ -189,7 +204,7 @@ fun weather_screen() {
             val intent = Intent(context,SecondaryActivity::class.java )
             context.startActivity(intent)
         }) {
-            Text(text = "Further details")
+            Text(text = "Forecasting details")
         }
         // Call the ForecastPanel function passing the sample forecast data
         //ForecastPanel(forecastData = sampleForecastData)

@@ -1,12 +1,15 @@
 package com.example.weather_app
 
 //Java imports
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +35,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.material3.Button
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import java.time.LocalDate
 
 class SecondaryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +64,7 @@ class SecondaryActivity : ComponentActivity() {
 }
 
 //@Preview(showBackground = true)
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DefaultPreview() {
     Weather_appTheme {
@@ -72,9 +77,12 @@ fun DefaultPreview() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun weather_screen() {
     // Sample forecast data for demonstration purposes
+    val currentDate = LocalDate.now()
+    val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy")
     val sampleForecastData = listOf(
         ForecastItem("2023-06-25", 30),
         ForecastItem("2023-06-26", 29),
@@ -92,6 +100,14 @@ fun weather_screen() {
 
         Text(
             text = "City: Barcelona",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
+            text = currentDate.format(dateFormatter),
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,

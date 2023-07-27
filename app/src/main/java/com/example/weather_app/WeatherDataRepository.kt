@@ -12,7 +12,7 @@ import io.ktor.http.takeFrom
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
-
+//
 @Serializable
 data class WeatherResponse(val current: CurrentData)
 

@@ -32,8 +32,6 @@ import com.example.weather_app.ui.theme.Weather_appTheme
 
 data class ForecastItem(val date: String, val temperature: Int)
 
-
-
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

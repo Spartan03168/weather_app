@@ -36,10 +36,18 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import java.time.LocalDate
 import kotlin.random.Random
+
 
 class SecondaryActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -83,6 +91,25 @@ fun DefaultPreview() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun weather_screen() {
+//    // Initializing a volley request
+//    val requestQueue = Volley.newRequestQueue(LocalContext.current)
+//
+//    //API Endpoint URL
+//    val apiURL = "https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13"
+//
+//    //Create API Request
+//    val jsonObjectRequest = JsonObjectRequest(
+//        Request.Method.GET, apiURL, null,
+//        Response.Listener { response ->
+//        val condition = response.getJSONObject("current").getString("condition")
+//        val  temperature = response.getJSONObject("current").getString("temp_c")
+//        val humidity = response.getJSONObject("current").getString("humidity")
+//        val windSpeed = response.getJSONObject("current").getString("wind_kph")
+//        },
+//        Response.ErrorListener { error ->  }
+//    )
+//    requestQueue.add(jsonObjectRequest)
+
     // Sample forecast data for demonstration purposes
     var devMode = 1
     val currentDate = LocalDate.now()
@@ -90,7 +117,10 @@ fun weather_screen() {
     val ForecastData = mutableListOf<LocalDate>()
     val TemperatureData = mutableListOf<Int>()
     val context = LocalContext.current
+    val weatherData = remember { mutableStateOf(WeatherData()) }
 
+    // Call the API to fetch weather data
+    fetchWeatherData(weatherData)
     Spacer(modifier = Modifier.height(12.dp))
     Column(
         modifier = Modifier
@@ -127,7 +157,7 @@ fun weather_screen() {
         )
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Conditions: Sunny",
+            text = "Conditions: ${weatherData.value.condition}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -135,7 +165,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Air quality: 1.3",
+            text = "Air quality: 1.3(SI)",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -143,7 +173,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Temperature: 28°C",
+            text = "Temperature: ${weatherData.value.temperature}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -151,7 +181,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Humidity: 85%",
+            text = "Humidity: ${FetchWeatherData(weatherData = weatherData.value.humidity)}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -159,7 +189,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Wind speed: 21 km/h",
+            text = "Wind speed: ${weatherData.value.windSpeed}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -167,7 +197,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Wind direction: SW",
+            text = "Wind direction: SW(SI)",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -175,7 +205,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Rainfall proability: 41%",
+            text = "Rainfall proability: 41%(SI)",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -184,7 +214,7 @@ fun weather_screen() {
         )
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Sunrise: 0638",
+            text = "Sunrise: 0638(SI)",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -192,7 +222,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Sunset: 2116",
+            text = "Sunset: 2116(SI)",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -293,3 +323,40 @@ fun historic_data(){
         )
     }
 }
+
+@Composable
+fun FetchWeatherData(weatherData: MutableState<WeatherData>) {
+    val requestQueue = Volley.newRequestQueue(LocalContext.current)
+    val apiURL = "https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13"
+    val apiKey = "95a088559cmsh02b67b89f71100fp143370jsnbe340908d363"
+
+    val jsonObjectRequest = JsonObjectRequest(
+        Request.Method.GET, apiURL, null,
+        { response ->
+            val condition = response.getJSONObject("current").getString("condition")
+            val temperature = response.getJSONObject("current").getInt("temp_c")
+            val humidity = response.getJSONObject("current").getInt("humidity")
+            val windSpeed = response.getJSONObject("current").getInt("wind_kph")
+
+            // Update the weatherData state with the fetched data
+            weatherData.value = WeatherData(condition, temperature, humidity, windSpeed)
+        },
+        { error -> }
+    ){
+        override fun getHeaders(): MutableMap<String, String> {
+            val headers = HashMap<String, String>()
+            headers["X-RapidAPI-Key"] = apiKey
+            headers["X-RapidAPI-Host"] = "weatherapi-com.p.rapidapi.com"
+            return headers
+        }
+    }
+
+    requestQueue.add(jsonObjectRequest)
+}
+
+data class WeatherData(
+    val condition: String = "",
+    val temperature: Int = 0,
+    val humidity: Int = 0,
+    val windSpeed: Int = 0
+)

@@ -42,6 +42,7 @@ import java.time.LocalDate
 import kotlin.random.Random
 
 class SecondaryActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -89,12 +90,6 @@ fun weather_screen() {
     val ForecastData = mutableListOf<LocalDate>()
     val TemperatureData = mutableListOf<Int>()
     val context = LocalContext.current
-    //Button(onClick = {
-    //    val intent = Intent(context, MainActivity::class.java)
-    //    context.startActivity(intent)
-    //}) {
-    //    Text(text = "Return")
-    //}
 
     Spacer(modifier = Modifier.height(12.dp))
     Column(
@@ -133,6 +128,14 @@ fun weather_screen() {
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
             text = "Conditions: Sunny",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Text(
+            text = "Air quality: 1.3",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -204,40 +207,60 @@ fun weather_screen() {
             val intent = Intent(context,SecondaryActivity::class.java )
             context.startActivity(intent)
         }) {
-            Text(text = "Forecasting details")
+            Text(text = "Forecasting and Historical details")
         }
         // Call the ForecastPanel function passing the sample forecast data
         //ForecastPanel(forecastData = sampleForecastData)
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ForecastPanel(forecastData: List<ForecastItem>) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
         Text(
-            text = "Forecast Panel",
+            text = "Forecast",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Call the data_viewer function passing the forecastData list
         data_viewer(forecastData = forecastData)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Historic data",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        historic_data()
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun data_viewer(forecastData: List<ForecastItem>) {
-    forecastData.forEach { forecastItem ->
+    val currentDate = LocalDate.now()
+    val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy")
+    val nextThreeDays = (1..3).map{currentDate.plusDays(it.toLong())}
+
+    nextThreeDays.forEachIndexed { index, date ->
+        val forecastItem = forecastData.getOrNull(index)
+        val temperatureText = forecastItem?.let { "Temperature: ${it.temperature}°C" } ?: "N/A"
         Text(
-            text = "Date: ${forecastItem.date}, Temperature: ${forecastItem.temperature}°C",
+            text = "Date: ${date.format(dateFormatter)}, $temperatureText",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 18.sp,
@@ -247,3 +270,26 @@ fun data_viewer(forecastData: List<ForecastItem>) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun historic_data(){
+    val currentDate = LocalDate.now()
+    val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy")
+    val lastDays = mutableListOf<LocalDate>()
+
+    for (i in 1..7){
+        val dateToDisplay = currentDate.minusDays(i.toLong())
+        lastDays.add(dateToDisplay)
+    }
+
+    for (days in lastDays.reversed()){
+        Text(
+            text = "Date: ${days.format(dateFormatter)}",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}

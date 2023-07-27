@@ -181,7 +181,7 @@ fun weather_screen() {
         )
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Sunrise: 06:38",
+            text = "Sunrise: 0638",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -189,7 +189,7 @@ fun weather_screen() {
             )
         )
         Text(
-            text = "Sunset: 21:16",
+            text = "Sunset: 2116",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,

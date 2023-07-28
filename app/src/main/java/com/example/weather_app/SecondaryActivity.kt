@@ -1,57 +1,45 @@
 package com.example.weather_app
 
 //Java imports
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
+
+//Variable imports
+import WeatherDataRepository
+import WeatherDataRepository.city
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.wear.tiles.material.Text
-import com.example.weather_app.ui.theme.Weather_appTheme
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.weather_app.model.WeatherData
+import com.example.weather_app.ui.theme.Weather_appTheme
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import kotlin.random.Random
-
-
-//Variable imports
-import WeatherDataRepository.city
 
 class SecondaryActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -172,38 +160,10 @@ fun weather_screen() {
         )
         Spacer(modifier = Modifier.height(25.dp))
         //Seperate advanced data behind a function at a later date
-        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-        Text(
-            text = "Advanced data(pending isolation protocol)",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-        Text(
-            text = "Pending new data points...",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-            )
-        )
-        Text(
-            text = "Pending new data points...",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-            )
-        )
-        Text(
-            text = "Pending new data points...",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-            )
-        )
-        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        val advanced_deployment = 0
+        if (advanced_deployment == 1){
+            advancedDataAnalysis()
+        }
         //end point for advanced data points
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -271,6 +231,43 @@ fun data_viewer(forecastData: List<ForecastItem>) {
             )
         )
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun advancedDataAnalysis(){
+    Divider(color = Color.Gray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+    Text(
+        text = "Advanced data",
+        style = TextStyle(
+            color = Color.White,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+    )
+    Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+    Text(
+        text = "Pending new data points...",
+        style = TextStyle(
+            color = Color.White,
+            fontSize = 24.sp,
+        )
+    )
+    Text(
+        text = "Pending new data points...",
+        style = TextStyle(
+            color = Color.White,
+            fontSize = 24.sp,
+        )
+    )
+    Text(
+        text = "Pending new data points...",
+        style = TextStyle(
+            color = Color.White,
+            fontSize = 24.sp,
+        )
+    )
+    Divider(color = Color.Gray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

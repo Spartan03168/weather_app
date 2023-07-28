@@ -14,7 +14,7 @@ import org.junit.Assert.*
  */
 class WeatherAppTest {
     @Test
-    fun dataTypesAreCorrect() {
+    fun test_1_verification() {
         val test_1 = city
         val test_2 = apiKey
         if (test_1 is String && test_2 is String){
@@ -22,6 +22,16 @@ class WeatherAppTest {
             assertTrue(true.toString(), actual)
         }
         else{
+            val actual = false
+            assertFalse(false.toString(),actual)
+        }
+    }
+
+    @Test
+    fun test_2_verification(){
+        val test_1 = city
+        val test_2 = apiKey
+        if (test_1 !is String || test_2 !is String){
             val actual = false
             assertFalse(false.toString(),actual)
         }

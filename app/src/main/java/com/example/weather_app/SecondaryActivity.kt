@@ -147,7 +147,6 @@ fun weather_screen() {
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
             )
         )
         Text(
@@ -155,7 +154,6 @@ fun weather_screen() {
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
             )
         )
         Text(
@@ -163,7 +161,6 @@ fun weather_screen() {
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
             )
         )
         Text(
@@ -171,14 +168,45 @@ fun weather_screen() {
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
+            )
+        )
+        Spacer(modifier = Modifier.height(25.dp))
+        //Seperate advanced data behind a function at a later date
+        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = "Advanced data(pending isolation protocol)",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         )
-        // Other weather data fields can be added here
-        // ...
+        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = "Pending new data points...",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+            )
+        )
+        Text(
+            text = "Pending new data points...",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+            )
+        )
+        Text(
+            text = "Pending new data points...",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+            )
+        )
+        Divider(color = Color.Red, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        //end point for advanced data points
 
         Spacer(modifier = Modifier.height(16.dp))
-        Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         val context = LocalContext.current
         Button(onClick = {
             val intent = Intent(context, SecondaryActivity::class.java)

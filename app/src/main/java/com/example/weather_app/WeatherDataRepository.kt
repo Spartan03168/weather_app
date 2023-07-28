@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object WeatherDataRepository {
-    private val city = "Barcelona"
-    private val apiKey = "95a088559cmsh02b67b89f71100fp143370jsnbe340908d363" // Replace this with your actual API key
+    val city = "Barcelona"
+    val apiKey = "95a088559cmsh02b67b89f71100fp143370jsnbe340908d363"
     private val client = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer()
@@ -29,7 +29,7 @@ object WeatherDataRepository {
                 method = HttpMethod.Get
                 header("X-RapidAPI-Key", apiKey)
                 header("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
-                parameter("q", "Barcelona")
+                parameter("q", city)
             }
         }
 

@@ -50,6 +50,9 @@ import java.time.LocalDate
 import kotlin.random.Random
 
 
+//Variable imports
+import WeatherDataRepository.city
+
 class SecondaryActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,7 +117,7 @@ fun weather_screen() {
         )
 
         Text(
-            text = "City: Barcelona",
+            text = "City: ${city}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
@@ -140,7 +143,7 @@ fun weather_screen() {
         )
         Divider(color = Color.White, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Conditions: ${weatherData.value.current.condition}",
+            text = "Conditions: ${weatherData.value.current.condition.text}",
             style = TextStyle(
                 color = Color.White,
                 fontSize = 24.sp,
